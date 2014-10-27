@@ -1,0 +1,39 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "io.ratpack:ratpack-gradle:0.9.9"
+    }
+}
+
+apply plugin: "io.ratpack.ratpack-groovy"
+apply plugin: "idea"
+
+repositories {
+    jcenter()
+    maven { url "https://repo.spring.io/repo" }
+}
+
+dependencies {
+    compile ratpack.dependency("h2")
+    compile ratpack.dependency("hikari")
+    compile ratpack.dependency("rx")
+
+    // Not working with hikari thats using java8 lambdas
+    //springloaded "org.springframework:springloaded:1.2.1.RELEASE"
+
+    runtime 'org.apache.logging.log4j:log4j-slf4j-impl:2.0.1'
+    runtime 'org.apache.logging.log4j:log4j-api:2.0.1'
+    runtime 'org.apache.logging.log4j:log4j-core:2.0.1'
+    runtime 'com.lmax:disruptor:3.3.0'
+
+}
+
+
+applicationDefaultJvmArgs = ["-Dfile.encoding=UTF-8"]
+
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.1'
+}
